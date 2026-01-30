@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { ExhibitItem, ExhibitCategory } from '../types';
+import { ExhibitItem, ExhibitCategory, Book } from '../types';
+import { BookCard } from './BookCard';
 
 interface ExhibitDetailProps {
   item: ExhibitItem;
   category: ExhibitCategory;
   onBack: () => void;
+  readingList: Book[];
+  onToggleBook: (book: Book) => void;
+  onOpenReadingList: () => void;
 }
 
-export const ExhibitDetail: React.FC<ExhibitDetailProps> = ({ item, category, onBack }) => {
+export const ExhibitDetail: React.FC<ExhibitDetailProps> = ({ item, category, onBack, readingList, onToggleBook, onOpenReadingList }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const images = item.gallery ? item.gallery : [item.posterUrl];
@@ -22,6 +26,10 @@ export const ExhibitDetail: React.FC<ExhibitDetailProps> = ({ item, category, on
   const prevImage = (e?: React.MouseEvent) => {
     e?.stopPropagation();
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const isBookmarked = (book: Book) => {
+    return readingList.some(b => b.title === book.title);
   };
 
   return (
@@ -44,7 +52,7 @@ export const ExhibitDetail: React.FC<ExhibitDetailProps> = ({ item, category, on
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-12">
+      <div className="flex flex-col lg:flex-row gap-12 mb-16">
         {/* Left Column: Visuals */}
         <div className="w-full lg:w-5/12 flex flex-col gap-4">
            {isVerticalGallery ? (
@@ -187,54 +195,62 @@ export const ExhibitDetail: React.FC<ExhibitDetailProps> = ({ item, category, on
               </div>
             </div>
           )}
-
-          {/* Books Section */}
-          {item.books && (
-            <div className="space-y-4">
-              <h4 className="text-gray-900 dark:text-white font-bold text-sm uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
-                <svg className="w-5 h-5 text-stanford-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-                Display Books
-              </h4>
-              <div className="grid grid-cols-1 gap-3">
-                {item.books.map((book, idx) => (
-                  <a 
-                    key={idx} 
-                    href={book.link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className={`block group/book p-4 rounded-lg bg-white border border-gray-200 hover:border-stanford-primary/30 dark:bg-white/5 dark:border-transparent dark:hover:bg-white/10 transition-all hover:shadow-lg ${!book.link ? 'cursor-default' : ''}`}
-                  >
-                    <div className="flex justify-between items-start gap-2">
-                      <div className="text-gray-900 dark:text-white text-base font-bold leading-tight group-hover/book:text-stanford-primary transition-colors">
-                        {book.title}
-                      </div>
-                      {book.date && (
-                        <span className="text-[10px] bg-gray-100 text-gray-500 dark:bg-white/10 dark:text-gray-400 px-2 py-1 rounded whitespace-nowrap font-medium">
-                          {book.date}
-                        </span>
-                      )}
-                    </div>
-                    
-                    <div className="text-gray-600 dark:text-gray-400 text-sm mt-1">{book.author}</div>
-                    
-                    <div className="flex justify-between items-end mt-2 pt-2 border-t border-gray-100 dark:border-white/5">
-                      <div className="text-[10px] text-gray-500 dark:text-gray-500 uppercase tracking-wide font-semibold">
-                        {book.publisher}
-                      </div>
-                      {book.link && (
-                        <div className="text-xs text-stanford-primary flex items-center gap-1 opacity-60 group-hover/book:opacity-100 transition-opacity font-medium">
-                           <span>Catalog Record</span>
-                           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                        </div>
-                      )}
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
+
+      {/* Books Section - Full Width Panel */}
+      {item.books && (
+        <div className="w-full mt-12 border-t border-gray-200 dark:border-white/10 pt-10">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+            <div>
+               <h4 className="text-2xl md:text-3xl font-serif font-bold text-gray-900 dark:text-white flex items-center gap-3 mb-2">
+                <span className="p-2 rounded-lg bg-stanford-primary/10 text-stanford-primary">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                </span>
+                Display Books
+               </h4>
+               <p className="text-gray-500 dark:text-gray-400 text-sm ml-12">
+                 Explore selected readings available at the Robert Crown Law Library.
+               </p>
+            </div>
+
+            {/* Reading List Export Button */}
+            <button 
+              onClick={onOpenReadingList}
+              className="flex items-center gap-2 px-5 py-3 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-md hover:border-stanford-primary dark:hover:border-stanford-primary/50 transition-all group"
+            >
+               <div className="relative">
+                  <svg className="w-5 h-5 text-gray-600 dark:text-gray-300 group-hover:text-stanford-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                  {readingList.length > 0 && (
+                    <span className="absolute -top-2 -right-2 w-4 h-4 flex items-center justify-center bg-stanford-primary text-white text-[9px] font-bold rounded-full shadow-sm animate-scale-up">
+                      {readingList.length}
+                    </span>
+                  )}
+               </div>
+               <span className="font-semibold text-sm text-gray-800 dark:text-white">View & Export List</span>
+               <span className="text-gray-400 group-hover:text-stanford-primary transition-colors">→</span>
+            </button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {item.books.map((book, idx) => (
+              <BookCard 
+                key={idx}
+                book={book}
+                isBookmarked={isBookmarked(book)}
+                onToggleBook={onToggleBook}
+              />
+            ))}
+          </div>
+          
+          <div className="text-center mt-8">
+             <p className="text-xs text-gray-400 dark:text-gray-600 flex items-center justify-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Book covers provided by <a href="https://openlibrary.org/" target="_blank" rel="noopener noreferrer" className="hover:text-stanford-primary transition-colors underline decoration-dotted">Open Library API</a> and <a href="https://books.google.com/" target="_blank" rel="noopener noreferrer" className="hover:text-stanford-primary transition-colors underline decoration-dotted">Google Books API</a>
+             </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

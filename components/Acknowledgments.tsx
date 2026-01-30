@@ -58,7 +58,7 @@ export const Acknowledgments: React.FC<AcknowledgmentsProps> = ({ onBack }) => {
                     Research & Development
                 </p>
                 <ul className="space-y-4">
-                    {['Jake Kubrin', 'Mark Jefferson', 'Brenda Alfaro'].map((name) => (
+                    {['Jake Kubrin', 'Mark Jefferson', 'Brenda Alfaro-Campos'].map((name) => (
                         <li key={name} className="flex items-center text-gray-700 dark:text-gray-300 font-medium text-lg">
                            <span className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-600 rounded-full mr-3"></span>
                            {name}

@@ -4,6 +4,9 @@ export interface Book {
   publisher?: string;
   date?: string;
   link?: string;
+  isbn?: string;
+  description?: string;
+  customCoverUrl?: string;
 }
 
 export interface ExhibitItem {

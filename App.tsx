@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { EXHIBIT_CATEGORIES } from './constants';
-import { ExhibitCategory, ExhibitItem } from './types';
+import { ExhibitCategory, ExhibitItem, Book } from './types';
 import { ExhibitCard } from './components/ExhibitCard';
 import { CategoryCard } from './components/CategoryCard';
 import { ExhibitDetail } from './components/ExhibitDetail';
 import { AICurator } from './components/AICurator';
 import { Acknowledgments } from './components/Acknowledgments';
+import { About } from './components/About';
+import { ReadingListModal } from './components/ReadingListModal';
 
 const App = () => {
   const [selectedCategory, setSelectedCategory] = useState<ExhibitCategory | null>(null);
   const [selectedExhibit, setSelectedExhibit] = useState<ExhibitItem | null>(null);
   const [showAcknowledgments, setShowAcknowledgments] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
   const [isAIChatOpen, setIsAIChatOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  
+  // Reading List State
+  const [readingList, setReadingList] = useState<Book[]>([]);
+  const [isReadingListOpen, setIsReadingListOpen] = useState(false);
 
   // Handle Dark Mode Class on Body/HTML
   useEffect(() => {
@@ -27,6 +34,7 @@ const App = () => {
     setSelectedCategory(null);
     setSelectedExhibit(null);
     setShowAcknowledgments(false);
+    setShowAbout(false);
   };
 
   const handleCategorySelect = (category: ExhibitCategory) => {
@@ -45,6 +53,16 @@ const App = () => {
     }
   };
 
+  const toggleBook = (book: Book) => {
+    setReadingList(prev => {
+      const exists = prev.some(b => b.title === book.title);
+      if (exists) {
+        return prev.filter(b => b.title !== book.title);
+      }
+      return [...prev, book];
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-[#121212] dark:text-white selection:bg-stanford-primary selection:text-white font-sans overflow-x-hidden transition-colors duration-300">
       
@@ -56,21 +74,41 @@ const App = () => {
       {/* Header */}
       <header className="relative z-10 pt-8 pb-6 px-6 md:px-12 max-w-7xl mx-auto border-b border-gray-200 dark:border-white/10 transition-colors duration-300">
         <div className="flex flex-col md:flex-row justify-between items-end gap-6">
-          <div className="cursor-pointer group" onClick={handleBackToHome}>
-            <h2 className="text-stanford-primary text-sm font-bold tracking-[0.2em] uppercase mb-1">Stanford Law School</h2>
-            <h1 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 dark:text-white tracking-tight group-hover:text-stanford-primary transition-colors">
-              AI in the Library
-            </h1>
+          <div className="flex flex-col">
+            <a 
+              href="https://law.stanford.edu/robert-crown-law-library" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-stanford-primary dark:text-red-400 hover:opacity-80 text-sm font-bold tracking-[0.2em] uppercase mb-1 transition-colors w-fit"
+            >
+              Stanford Law School
+            </a>
+            <div className="cursor-pointer group w-fit" onClick={handleBackToHome}>
+              <h1 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 dark:text-white tracking-tight group-hover:text-stanford-primary transition-colors">
+                AI in the Library
+              </h1>
+            </div>
           </div>
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 flex-wrap justify-end">
+             {/* About Link */}
+             <button 
+               onClick={() => {
+                  handleBackToHome(); // Reset state
+                  setShowAbout(true);
+               }}
+               className="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-stanford-primary dark:hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5"
+             >
+               About
+             </button>
+
              {/* Acknowledgments Link */}
              <button 
                onClick={() => {
                   handleBackToHome(); // Reset state
                   setShowAcknowledgments(true);
                }}
-               className="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-stanford-primary dark:hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 mr-2"
+               className="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-stanford-primary dark:hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5"
              >
                Acknowledgments
              </button>
@@ -91,7 +129,7 @@ const App = () => {
             {/* AI Curator Button */}
             <button 
               onClick={() => setIsAIChatOpen(!isAIChatOpen)}
-              className="flex items-center gap-3 px-6 py-3 bg-white border border-gray-200 text-gray-900 shadow-sm hover:bg-gray-50 dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/20 dark:text-white rounded-full transition-all duration-300 group"
+              className="flex items-center gap-3 px-6 py-3 bg-white border border-gray-200 text-gray-900 shadow-sm hover:bg-gray-50 dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/20 dark:text-white rounded-full transition-all duration-300 group ml-2"
             >
               <div className="relative">
                 <span className="absolute -top-1 -right-1 w-3 h-3 bg-stanford-primary rounded-full animate-ping"></span>
@@ -106,7 +144,9 @@ const App = () => {
       {/* Main Content Area */}
       <main className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 py-12 min-h-[70vh]">
         
-        {showAcknowledgments ? (
+        {showAbout ? (
+           <About onBack={handleBackToHome} />
+        ) : showAcknowledgments ? (
            <Acknowledgments onBack={handleBackToHome} />
         ) : selectedExhibit && selectedCategory ? (
           // EXHIBIT DETAIL VIEW (Full Page)
@@ -114,6 +154,9 @@ const App = () => {
             item={selectedExhibit}
             category={selectedCategory}
             onBack={handleBackToCategory}
+            readingList={readingList}
+            onToggleBook={toggleBook}
+            onOpenReadingList={() => setIsReadingListOpen(true)}
           />
         ) : !selectedCategory ? (
           // HOME VIEW: Physical Exhibit Hero + Categories
@@ -259,10 +302,17 @@ const App = () => {
         </div>
       </footer>
 
-      {/* AICurator is always available */}
+      {/* Overlays */}
       <AICurator 
         isOpen={isAIChatOpen} 
         onClose={() => setIsAIChatOpen(false)} 
+      />
+      
+      <ReadingListModal
+        isOpen={isReadingListOpen}
+        onClose={() => setIsReadingListOpen(false)}
+        readingList={readingList}
+        onRemove={toggleBook}
       />
 
       {/* Global Styles */}
