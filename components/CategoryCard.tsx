@@ -11,37 +11,44 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category, onClick, i
   return (
     <div 
       onClick={() => onClick(category)}
-      className="group relative h-80 w-full rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-[0_0_30px_rgba(140,21,21,0.4)] transition-all duration-500 transform hover:-translate-y-1 bg-[#1a1a1a] border border-white/10"
+      className="group relative flex flex-col h-full min-h-[24rem] rounded-2xl overflow-hidden cursor-pointer bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 shadow-md hover:shadow-xl hover:border-stanford-primary/30 dark:hover:border-stanford-primary/30 transition-all duration-300 hover:-translate-y-1 animate-fade-in-up"
       style={{ animationDelay: `${index * 100}ms` }}
     >
-      {/* Background Image */}
-      <div className="absolute inset-0">
+      {/* Image Section - Top Part */}
+      <div className="relative h-48 w-full overflow-hidden bg-gray-100 dark:bg-black/20 border-b border-gray-100 dark:border-white/5">
         <img 
           src={category.coverImage} 
           alt={category.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-40"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+        {/* Hover Overlay */}
+        <div className="absolute inset-0 bg-stanford-primary/0 group-hover:bg-stanford-primary/10 transition-colors duration-300 pointer-events-none" />
       </div>
 
-      {/* Content */}
-      <div className="absolute inset-0 p-8 flex flex-col justify-end">
-        <div className="transform transition-transform duration-300 translate-y-2 group-hover:translate-y-0">
-          {/* High Contrast Section Label */}
-          <span className="inline-block px-3 py-1.5 mb-4 text-xs font-bold tracking-[0.2em] text-white bg-stanford-primary rounded shadow-[0_0_15px_rgba(140,21,21,0.5)] uppercase border border-white/10">
+      {/* Content Section - Bottom Part */}
+      <div className="flex-1 p-6 flex flex-col bg-white dark:bg-[#1a1a1a] relative">
+        <div className="flex items-start justify-between mb-3">
+           <span className="text-xs font-bold tracking-[0.2em] text-stanford-primary uppercase mt-1">
             Section 0{index + 1}
-          </span>
-          <h3 className="text-3xl font-serif font-bold text-white mb-2 leading-none">
-            {category.title}
-          </h3>
-          <p className="text-gray-300 text-sm font-light leading-relaxed max-w-[90%] group-hover:text-white transition-colors">
-            {category.description}
-          </p>
-          
-          <div className="mt-6 flex items-center text-stanford-primary text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <span>Enter Gallery</span>
-            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-          </div>
+           </span>
+           
+           {/* Interactive Icon */}
+           <div className="w-8 h-8 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center text-gray-400 group-hover:bg-stanford-primary group-hover:text-white transition-all duration-300 transform group-hover:rotate-45">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 19l14-14m0 0H6.5m12.5 0V17.5"></path></svg>
+           </div>
+        </div>
+        
+        <h3 className="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-3 leading-tight group-hover:text-stanford-primary transition-colors">
+          {category.title}
+        </h3>
+        
+        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
+          {category.description}
+        </p>
+        
+        <div className="mt-auto pt-4 border-t border-gray-100 dark:border-white/5 flex items-center justify-between text-sm font-semibold">
+           <span className="text-gray-500 dark:text-gray-400 group-hover:text-stanford-primary transition-colors">Explore Gallery</span>
+           <span className="text-xs text-gray-400 font-normal">{category.items.length} Exhibits</span>
         </div>
       </div>
     </div>

@@ -174,7 +174,7 @@ const App = () => {
                    ON LOCATION • FLOOR 1
                  </span>
                  <h2 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 max-w-2xl leading-tight drop-shadow-lg">
-                   Visit the Physical Experience
+                   Now on Display in the Robert Crown Law Library
                  </h2>
                  <p className="text-gray-100 text-lg md:text-xl font-light max-w-xl mb-6 leading-relaxed drop-shadow-md">
                    Immerse yourself in our curated collection of books, interactive guides, and visual frameworks.

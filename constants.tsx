@@ -55,7 +55,7 @@ export const EXHIBIT_CATEGORIES: ExhibitCategory[] = [
     title: 'Recommended Rules',
     subtitle: 'Frameworks & Policies',
     description: 'Essential frameworks like P.A.U.S.E. and the NYT Rule.',
-    coverImage: 'https://i.postimg.cc/T3dX3kCC/10.png',
+    coverImage: 'https://i.postimg.cc/dV5ck8fC/NYT-Rule-Original.png',
     items: [
       {
         id: 'pause-nyt',
