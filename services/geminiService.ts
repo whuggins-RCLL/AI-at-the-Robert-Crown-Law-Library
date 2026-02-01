@@ -6,12 +6,13 @@ let configError: string | null = null;
 
 const getAI = () => {
   if (aiInstance) return aiInstance;
-  if (configError) return null;
+  
+  // Reset error state on new attempt
+  configError = null;
 
   let apiKey = '';
 
   // Priority 1: Vite (Standard for this project structure)
-  // We check import.meta.env if it exists
   try {
     // @ts-ignore
     if (import.meta && import.meta.env && import.meta.env.VITE_API_KEY) {
@@ -23,11 +24,15 @@ const getAI = () => {
   }
 
   // Priority 2: Standard Process Env (Node/CRA/Next)
-  // We check process.env if it exists
   if (!apiKey && typeof process !== 'undefined' && process.env) {
     if (process.env.API_KEY) apiKey = process.env.API_KEY;
     else if (process.env.REACT_APP_API_KEY) apiKey = process.env.REACT_APP_API_KEY;
     else if (process.env.VITE_API_KEY) apiKey = process.env.VITE_API_KEY;
+  }
+
+  // Clean the key (remove whitespace/newlines which is a common copy-paste error)
+  if (apiKey) {
+    apiKey = apiKey.trim();
   }
 
   // Debugging log (visible in browser console)
@@ -65,6 +70,7 @@ export const sendMessageToGemini = async (
       return "⚠️ System Error: Failed to initialize AI client.";
     }
 
+    // Use the specific model requested for Basic Text Tasks
     const model = 'gemini-3-flash-preview';
     
     // The history array passed in includes the current user message at the end.
@@ -84,20 +90,26 @@ export const sendMessageToGemini = async (
     });
 
     const result = await chat.sendMessage({ message: userMessage });
-    return result.text || "I'm sorry, I couldn't process that request right now.";
+    return result.text || "I'm sorry, I couldn't process that request right now (Empty response).";
     
   } catch (error: any) {
     console.error("Gemini API Request Error:", error);
     
-    // Handle specific API errors
-    if (error.message?.includes('API key') || error.status === 400 || error.status === 403) {
-      return "⚠️ Access Error: API Key is invalid or expired. Please check your Vercel configuration.";
+    const errorMessage = error.message || error.toString();
+    
+    // Handle specific API errors with detailed user feedback
+    if (errorMessage.includes('API key') || error.status === 400 || error.status === 403) {
+      return `⚠️ Access Error: API Key issue. Check Vercel 'VITE_API_KEY' setting. \n(Details: ${errorMessage})`;
     }
     
     if (error.status === 503 || error.status === 429) {
-      return "I'm currently receiving too many requests. Please try again in a moment.";
+      return `⚠️ Service Busy: The AI model is currently overloaded. Please try again in 30 seconds. (Status: ${error.status})`;
     }
     
-    return "I am currently experiencing technical difficulties. Please try again later.";
+    if (error.status === 404) {
+      return `⚠️ Configuration Error: The model 'gemini-3-flash-preview' was not found. Your API key might not have access to this preview model yet.`;
+    }
+    
+    return `⚠️ Technical Difficulty: ${errorMessage}`;
   }
 };
