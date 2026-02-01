@@ -16,12 +16,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Source+Serif+4:opsz,wght@8..60,300;400;600;700&display=swap" rel="stylesheet">
     
     <script>
-      // Polyfill process.env to prevent ReferenceError in browser
-      window.process = {
-        env: {
-          NODE_ENV: 'production'
-        }
-      };
+      // Polyfill process.env safely to prevent ReferenceError in browser
+      // while preserving any injected values from the environment/build
+      window.process = window.process || {};
+      window.process.env = window.process.env || {};
+      if (!window.process.env.NODE_ENV) {
+        window.process.env.NODE_ENV = 'production';
+      }
       
       tailwind.config = {
         darkMode: 'class',

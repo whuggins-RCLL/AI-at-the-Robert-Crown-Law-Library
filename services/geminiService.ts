@@ -12,6 +12,10 @@ const getAI = () => {
       ? process.env.API_KEY 
       : ''; 
       
+    if (!apiKey) {
+      console.warn("API_KEY is missing. Please ensure process.env.API_KEY is set in your environment variables.");
+    }
+      
     aiInstance = new GoogleGenAI({ apiKey });
   }
   return aiInstance;
@@ -26,13 +30,18 @@ export const sendMessageToGemini = async (
     // Using gemini-3-flash-preview as recommended for basic text tasks
     const model = 'gemini-3-flash-preview';
     
+    // The history array passed in includes the current user message at the end.
+    // We must exclude it from the history passed to chats.create, 
+    // because sendMessage will send it as the new turn.
+    const pastHistory = history.slice(0, -1);
+    
     const chat = ai.chats.create({
       model: model,
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
         temperature: 0.7,
       },
-      history: history.map(h => ({
+      history: pastHistory.map(h => ({
         role: h.role,
         parts: [{ text: h.text }]
       }))
