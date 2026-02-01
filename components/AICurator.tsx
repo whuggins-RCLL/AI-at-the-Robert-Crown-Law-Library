@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Markdown from 'react-markdown';
 import { sendMessageToGemini } from '../services/geminiService';
 import { ChatMessage } from '../types';
 
@@ -50,29 +51,37 @@ export const AICurator: React.FC<AICuratorProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-40 w-full max-w-md md:w-96 md:bottom-8 md:right-8 flex flex-col items-end pointer-events-none">
-      <div className="pointer-events-auto w-full bg-white dark:bg-[#2a2a2a] border border-gray-200 dark:border-stanford-primary/50 shadow-[0_10px_40px_rgba(0,0,0,0.2)] dark:shadow-[0_0_40px_rgba(0,0,0,0.5)] rounded-t-lg md:rounded-lg overflow-hidden flex flex-col max-h-[600px] animate-slide-in-right">
+    <div className="fixed inset-x-0 bottom-0 z-40 flex justify-center md:inset-auto md:bottom-8 md:right-8 md:block pointer-events-none">
+      <div className="pointer-events-auto w-full md:w-96 bg-white dark:bg-[#2a2a2a] border-t md:border border-gray-200 dark:border-stanford-primary/50 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] md:shadow-[0_10px_40px_rgba(0,0,0,0.2)] dark:shadow-[0_0_40px_rgba(0,0,0,0.5)] rounded-t-2xl md:rounded-2xl overflow-hidden flex flex-col max-h-[80vh] md:max-h-[600px] animate-slide-in-right">
         
         {/* Header */}
-        <div className="bg-stanford-primary px-4 py-3 flex justify-between items-center">
+        <div 
+          className="bg-stanford-primary px-4 py-3 flex justify-between items-center flex-shrink-0 cursor-pointer md:cursor-default" 
+          onClick={() => window.innerWidth < 768 && onClose()}
+        >
           <div className="flex items-center space-x-2">
             <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
             <h3 className="font-sans font-semibold text-white tracking-wide">AI Curator</h3>
           </div>
-          <button onClick={onClose} className="text-white/80 hover:text-white">
+          <button 
+            onClick={(e) => { e.stopPropagation(); onClose(); }} 
+            className="text-white/80 hover:text-white p-1 hover:bg-white/10 rounded-full transition-colors"
+            aria-label="Close Chat"
+          >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
         </div>
 
         {/* Chat Area */}
-        <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-[#1a1a1a] h-80 scrollbar-hide">
+        <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-[#1a1a1a] min-h-0 scrollbar-hide">
           {messages.map((msg, idx) => {
             const isError = msg.text.startsWith('⚠️');
+            const isUser = msg.role === 'user';
             
             // Determine styles based on role and error state
             let bubbleClass = '';
             
-            if (msg.role === 'user') {
+            if (isUser) {
                // Use Stanford Primary Color (Cardinal Red) for User
                bubbleClass = 'bg-stanford-primary text-white rounded-br-none';
             } else if (isError) {
@@ -82,9 +91,32 @@ export const AICurator: React.FC<AICuratorProps> = ({ isOpen, onClose }) => {
             }
 
             return (
-              <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] rounded-2xl px-4 py-2 text-sm leading-relaxed whitespace-pre-wrap ${bubbleClass}`}>
-                  {msg.text}
+              <div key={idx} className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[85%] rounded-2xl px-4 py-2 text-sm leading-relaxed ${bubbleClass}`}>
+                  <Markdown
+                    components={{
+                      a: ({ node, ...props }) => (
+                        <a 
+                          {...props} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className={`underline hover:opacity-80 break-all ${isUser ? 'text-white' : 'text-stanford-primary dark:text-red-300'}`} 
+                        />
+                      ),
+                      p: ({ node, ...props }) => <p {...props} className="mb-2 last:mb-0" />,
+                      ul: ({ node, ...props }) => <ul {...props} className="list-disc ml-4 mb-2" />,
+                      ol: ({ node, ...props }) => <ol {...props} className="list-decimal ml-4 mb-2" />,
+                      li: ({ node, ...props }) => <li {...props} className="pl-1" />,
+                      strong: ({ node, ...props }) => <strong {...props} className="font-bold" />,
+                      em: ({ node, ...props }) => <em {...props} className="italic" />,
+                      h1: ({ node, ...props }) => <h1 {...props} className="text-base font-bold mb-2 mt-1 block" />,
+                      h2: ({ node, ...props }) => <h2 {...props} className="text-sm font-bold mb-2 mt-1 block" />,
+                      h3: ({ node, ...props }) => <h3 {...props} className="text-sm font-bold mb-1 mt-1 block" />,
+                      blockquote: ({ node, ...props }) => <blockquote {...props} className="border-l-2 border-gray-300 pl-3 italic my-2" />
+                    }}
+                  >
+                    {msg.text}
+                  </Markdown>
                 </div>
               </div>
             );
@@ -102,7 +134,7 @@ export const AICurator: React.FC<AICuratorProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Input Area */}
-        <div className="p-3 bg-white dark:bg-[#2a2a2a] border-t border-gray-200 dark:border-white/10">
+        <div className="p-3 bg-white dark:bg-[#2a2a2a] border-t border-gray-200 dark:border-white/10 flex-shrink-0 safe-area-bottom">
           <div className="relative flex items-center">
             <input
               type="text"

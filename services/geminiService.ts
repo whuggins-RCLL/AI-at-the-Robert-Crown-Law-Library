@@ -97,21 +97,42 @@ export const sendMessageToGemini = async (
   } catch (error: any) {
     console.error("Gemini API Request Error:", error);
     
-    const errorMessage = error.message || error.toString();
-    const currentDomain = typeof window !== 'undefined' ? window.location.origin : 'unknown';
+    // Construct a comprehensive string for matching error types, including hidden nested properties
+    let fullErrorDetails = error.message || error.toString();
+    try {
+        if (error.response) fullErrorDetails += JSON.stringify(error.response);
+        if (error.body) fullErrorDetails += JSON.stringify(error.body);
+    } catch (e) { /* ignore circular reference errors during stringify */ }
+    
+    const currentOrigin = typeof window !== 'undefined' ? window.location.origin : 'unknown';
 
-    // 1. Handle Key Restrictions (This matches your screenshot error)
+    // 1. Handle Key Restrictions (403 Forbidden / Referer blocked)
     if (
-        errorMessage.includes('PERMISSION_DENIED') || 
-        errorMessage.includes('requests from referer') || 
-        errorMessage.includes('blocked') ||
+        fullErrorDetails.includes('PERMISSION_DENIED') || 
+        fullErrorDetails.includes('referer') || 
+        fullErrorDetails.includes('blocked') ||
         error.status === 403
     ) {
-      return `⚠️ Access Denied: Google blocked this request.\n\nGo to Google Cloud Console > Credentials > Edit Key.\n\nUnder "Website Restrictions", click ADD and paste:\n${currentDomain}/*`;
+      // Extract project name to suggest a wildcard (e.g., ai-library-xyz.vercel.app -> ai-library-*.vercel.app)
+      const projectMatch = currentOrigin.match(/https:\/\/([a-z0-9-]+)-[a-z0-9]+\.vercel\.app/);
+      const suggestedPattern = projectMatch 
+         ? `https://${projectMatch[1]}-*.vercel.app/*` 
+         : `${currentOrigin}/*`;
+
+      return `⚠️ Access Denied: Google blocked this request.
+      
+      You are likely on a Vercel Preview URL which changes every time you deploy.
+      
+      1. Go to Google Cloud Console > Credentials > Edit Key.
+      2. Under "Website Restrictions", add this WILDCARD pattern:
+      
+      ${suggestedPattern}
+      
+      (This covers all future preview deployments)`;
     }
 
     // 2. Handle Missing/Invalid Key
-    if (errorMessage.includes('API key') || error.status === 400) {
+    if (fullErrorDetails.includes('API key') || error.status === 400) {
       return `⚠️ Access Error: API Key is invalid. Check Vercel Environment Variables.`;
     }
     
@@ -125,6 +146,6 @@ export const sendMessageToGemini = async (
       return `⚠️ Configuration Error: The model '${'gemini-3-flash-preview'}' was not found. Your API key might not have access to this preview model yet.`;
     }
     
-    return `⚠️ Technical Difficulty: ${errorMessage}`;
+    return `⚠️ Technical Difficulty: ${error.message || 'Unknown error occurred'}`;
   }
 };
