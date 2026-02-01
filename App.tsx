@@ -163,17 +163,23 @@ const App = () => {
           <div className="animate-fade-in-up">
             
             {/* Hero Section: Physical Exhibit */}
-            <div className="relative h-[36rem] w-full rounded-2xl overflow-hidden group border border-gray-200 dark:border-white/10 shadow-2xl mb-16">
-              <img 
-                src="https://i.postimg.cc/zXRrQb3j/1000081359-(2).jpg" 
-                alt="Physical Exhibit at Crown Law Library" 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105 filter brightness-90 group-hover:brightness-100"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent p-8 md:p-16 flex flex-col justify-center">
+            <div className="relative min-h-[36rem] w-full rounded-2xl overflow-hidden group border border-gray-200 dark:border-white/10 shadow-2xl mb-16 flex items-center">
+              {/* Background with Gradient */}
+              <div className="absolute inset-0 w-full h-full">
+                <img 
+                  src="https://i.postimg.cc/zXRrQb3j/1000081359-(2).jpg" 
+                  alt="Physical Exhibit at Crown Law Library" 
+                  className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105 filter brightness-90 group-hover:brightness-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
+              </div>
+
+              {/* Content Wrapper */}
+              <div className="relative z-10 p-8 md:p-16 flex flex-col justify-center w-full">
                  <span className="inline-block px-3 py-1 mb-6 text-xs font-bold tracking-widest text-white bg-stanford-primary/90 rounded-full w-fit backdrop-blur-sm border border-white/10">
                    ON LOCATION • FLOOR 1
                  </span>
-                 <h2 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 max-w-2xl leading-tight drop-shadow-lg">
+                 <h2 className="text-3xl md:text-6xl font-serif font-bold text-white mb-6 max-w-2xl leading-tight drop-shadow-lg">
                    Now on Display in the Robert Crown Law Library
                  </h2>
                  <p className="text-gray-100 text-lg md:text-xl font-light max-w-xl mb-6 leading-relaxed drop-shadow-md">
