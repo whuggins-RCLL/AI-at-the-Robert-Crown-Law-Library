@@ -23,6 +23,7 @@ export interface ExhibitItem {
   books?: Book[]; // Optional list of display books
   icon: string;
   links?: { title: string; url: string }[]; // Optional list of external links
+  modules?: { title: string; url: string }[]; // Optional list of course modules
 }
 
 export interface ExhibitCategory {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ABOUT_CONTENT } from '../constants';
 
 interface AboutProps {
   onBack: () => void;
@@ -24,25 +25,25 @@ export const About: React.FC<AboutProps> = ({ onBack }) => {
       <div className="space-y-8 md:space-y-12">
         {/* Intro */}
         <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed font-light border-l-4 border-stanford-primary pl-6">
-           AI in the Library exists as both a physical display in the Robert Crown Law Library and this companion website. Fittingly, we used AI tools throughout its creation.
+           {ABOUT_CONTENT.intro}
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* How We Made This */}
             <section className="bg-white dark:bg-[#1a1a1a] p-8 rounded-2xl border border-gray-200 dark:border-white/10 shadow-lg relative overflow-hidden group hover:border-stanford-primary/30 transition-colors">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-stanford-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-stanford-primary/10 transition-colors"></div>
-                <h3 className="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-4 relative z-10">How We Made This</h3>
+                <h3 className="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-4 relative z-10">{ABOUT_CONTENT.sections[0].title}</h3>
                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed relative z-10">
-                    We used Canva for visual planning, NotebookLM for videos and infographics, and Claude, Gemini, and ChatGPT for drafting text. All AI-generated content was reviewed, fact-checked, and refined by library staff using traditional research methods.
+                    {ABOUT_CONTENT.sections[0].content}
                 </p>
             </section>
 
              {/* Vibe Coding */}
             <section className="bg-white dark:bg-[#1a1a1a] p-8 rounded-2xl border border-gray-200 dark:border-white/10 shadow-lg relative overflow-hidden group hover:border-stanford-primary/30 transition-colors">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-stanford-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-stanford-primary/10 transition-colors"></div>
-                <h3 className="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-4 relative z-10">This Site Is a Vibe Coding Example</h3>
+                <h3 className="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-4 relative z-10">{ABOUT_CONTENT.sections[1].title}</h3>
                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed relative z-10">
-                    This website demonstrates "vibe coding"—building software by describing what you want in plain language while an AI writes the code. We built it using Google AI Studio and host it through GitHub and Vercel. The site connects to three APIs: Google Gemini, Open Library, and Google Books.
+                    {ABOUT_CONTENT.sections[1].content}
                 </p>
             </section>
         </div>
@@ -51,10 +52,10 @@ export const About: React.FC<AboutProps> = ({ onBack }) => {
         <section className="bg-gray-50 dark:bg-white/5 p-8 rounded-2xl border border-gray-200 dark:border-white/5 transition-colors hover:border-stanford-primary/30">
             <h3 className="text-xl font-serif font-bold text-gray-900 dark:text-white mb-4 flex items-center">
                  <span className="w-2 h-2 rounded-full bg-stanford-primary mr-3"></span>
-                 Why We Share Our Process
+                 {ABOUT_CONTENT.sections[2].title}
             </h3>
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                Transparency matters. By showing how we used these tools—including their limitations—we hope to encourage informed experimentation within the Stanford Law community.
+                {ABOUT_CONTENT.sections[2].content}
             </p>
         </section>
 

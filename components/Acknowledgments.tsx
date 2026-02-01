@@ -1,4 +1,5 @@
 import React from 'react';
+import { ACKNOWLEDGMENTS_CONTENT } from '../constants';
 
 interface AcknowledgmentsProps {
   onBack: () => void;
@@ -25,9 +26,23 @@ export const Acknowledgments: React.FC<AcknowledgmentsProps> = ({ onBack }) => {
         {/* Leadership */}
         <section className="bg-white dark:bg-[#1a1a1a] p-8 md:p-10 rounded-2xl border border-gray-200 dark:border-white/10 shadow-lg relative overflow-hidden">
             <div className="absolute top-0 left-0 w-2 h-full bg-stanford-primary"></div>
-            <h3 className="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-4">Leadership & Vision</h3>
+            <h3 className="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-4">{ACKNOWLEDGMENTS_CONTENT.leadership.title}</h3>
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed font-light">
-                We extend our deepest gratitude to <span className="font-semibold text-gray-900 dark:text-white">Beth Williams</span>, Dean of the Robert Crown Law Library, for her unwavering support, visionary guidance, and commitment to fostering innovation through our AI Ventures.
+                {ACKNOWLEDGMENTS_CONTENT.leadership.parts.map((part, index) => (
+                  part.url ? (
+                    <a 
+                      key={index} 
+                      href={part.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-stanford-primary hover:underline font-semibold decoration-stanford-primary/30 hover:decoration-stanford-primary"
+                    >
+                      {part.text}
+                    </a>
+                  ) : (
+                    <span key={index}>{part.text}</span>
+                  )
+                ))}
             </p>
         </section>
 
@@ -36,13 +51,20 @@ export const Acknowledgments: React.FC<AcknowledgmentsProps> = ({ onBack }) => {
             <section className="bg-gray-50 dark:bg-white/5 p-8 rounded-2xl border border-gray-200 dark:border-white/5 transition-colors hover:border-stanford-primary/30">
                 <h3 className="text-xl font-serif font-bold text-gray-900 dark:text-white mb-6 flex items-center">
                     <span className="w-2 h-2 rounded-full bg-stanford-primary mr-3"></span>
-                    Staff Contributions
+                    {ACKNOWLEDGMENTS_CONTENT.groups[0].title}
                 </h3>
                 <ul className="space-y-4">
-                    {['Will Huggins', 'Taryn Marks', 'Nhatrang Nguyen', 'Lily Haupt'].map((name) => (
-                        <li key={name} className="flex items-center text-gray-700 dark:text-gray-300 font-medium text-lg">
-                           <span className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-600 rounded-full mr-3"></span>
-                           {name}
+                    {ACKNOWLEDGMENTS_CONTENT.groups[0].members.map((member) => (
+                        <li key={member.name} className="flex items-center text-gray-700 dark:text-gray-300 font-medium text-lg">
+                           <span className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-600 rounded-full mr-3 flex-shrink-0"></span>
+                           <a 
+                             href={member.url} 
+                             target="_blank" 
+                             rel="noopener noreferrer" 
+                             className="hover:text-stanford-primary transition-colors hover:underline decoration-stanford-primary/30"
+                           >
+                             {member.name}
+                           </a>
                         </li>
                     ))}
                 </ul>
@@ -52,16 +74,23 @@ export const Acknowledgments: React.FC<AcknowledgmentsProps> = ({ onBack }) => {
             <section className="bg-gray-50 dark:bg-white/5 p-8 rounded-2xl border border-gray-200 dark:border-white/5 transition-colors hover:border-stanford-primary/30">
                 <h3 className="text-xl font-serif font-bold text-gray-900 dark:text-white mb-2 flex items-center">
                     <span className="w-2 h-2 rounded-full bg-stanford-primary mr-3"></span>
-                    Selected Reading Fulfillment & Processing
+                    {ACKNOWLEDGMENTS_CONTENT.groups[1].title}
                 </h3>
                 <p className="text-gray-500 dark:text-gray-400 text-xs mb-6 uppercase tracking-wide font-semibold ml-5">
-                    Research & Development
+                    {ACKNOWLEDGMENTS_CONTENT.groups[1].subtitle}
                 </p>
                 <ul className="space-y-4">
-                    {['Jake Kubrin', 'Mark Jefferson', 'Brenda Alfaro-Campos'].map((name) => (
-                        <li key={name} className="flex items-center text-gray-700 dark:text-gray-300 font-medium text-lg">
-                           <span className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-600 rounded-full mr-3"></span>
-                           {name}
+                    {ACKNOWLEDGMENTS_CONTENT.groups[1].members.map((member) => (
+                        <li key={member.name} className="flex items-center text-gray-700 dark:text-gray-300 font-medium text-lg">
+                           <span className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-600 rounded-full mr-3 flex-shrink-0"></span>
+                           <a 
+                             href={member.url} 
+                             target="_blank" 
+                             rel="noopener noreferrer" 
+                             className="hover:text-stanford-primary transition-colors hover:underline decoration-stanford-primary/30"
+                           >
+                             {member.name}
+                           </a>
                         </li>
                     ))}
                 </ul>

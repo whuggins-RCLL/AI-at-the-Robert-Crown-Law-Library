@@ -204,7 +204,7 @@ export const BookCard: React.FC<BookCardProps> = ({ book, isBookmarked, onToggle
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-stanford-primary/10 text-stanford-primary dark:bg-white/10 dark:text-red-300 dark:hover:bg-stanford-primary dark:hover:text-white text-xs font-bold uppercase tracking-wider hover:bg-stanford-primary hover:text-white transition-all group/link w-full justify-center"
               >
-                <span>Catalog Record</span>
+                <span>View in SearchWorks</span>
                 <svg className="w-3 h-3 group-hover/link:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </a>
             </div>

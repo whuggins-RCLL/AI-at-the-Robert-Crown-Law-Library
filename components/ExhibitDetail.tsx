@@ -198,6 +198,44 @@ export const ExhibitDetail: React.FC<ExhibitDetailProps> = ({ item, category, on
         </div>
       </div>
 
+      {/* Modules Section - Full Width Panel */}
+      {item.modules && item.modules.length > 0 && (
+         <div className="w-full mt-12 border-t border-gray-200 dark:border-white/10 pt-10">
+            <div className="flex items-center gap-3 mb-6">
+                <span className="p-2 rounded-lg bg-stanford-primary/10 text-stanford-primary">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                </span>
+                <h4 className="text-2xl font-serif font-bold text-gray-900 dark:text-white">
+                    Course Syllabus
+                </h4>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {item.modules.map((module, index) => (
+                <a 
+                    key={index} 
+                    href={module.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group flex items-center p-4 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/5 hover:border-stanford-primary/50 hover:shadow-md transition-all duration-300"
+                >
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-stanford-primary text-white font-bold text-sm flex items-center justify-center shadow-sm mr-4 group-hover:scale-110 transition-transform">
+                    {index + 1}
+                    </div>
+                    <div className="flex-1">
+                    <span className="text-base font-bold text-gray-800 dark:text-gray-200 group-hover:text-stanford-primary dark:group-hover:text-red-300 transition-colors">
+                        {module.title}
+                    </span>
+                    </div>
+                    <div className="text-gray-400 group-hover:text-stanford-primary dark:text-gray-500 dark:group-hover:text-red-400 transition-colors">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                </a>
+                ))}
+            </div>
+         </div>
+      )}
+
       {/* Books Section - Full Width Panel */}
       {item.books && (
         <div className="w-full mt-12 border-t border-gray-200 dark:border-white/10 pt-10">

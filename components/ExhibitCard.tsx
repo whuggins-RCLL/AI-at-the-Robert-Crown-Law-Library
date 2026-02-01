@@ -25,7 +25,6 @@ export const ExhibitCard: React.FC<ExhibitCardProps> = ({ item, onClick, index, 
 
   if (variant === 'poster') {
     // Determine height class: use provided className or default to h-[28rem]
-    // We use a regex to check if a height class is provided to avoid conflict
     const hasHeight = /\bh-\[?\w+\]?/.test(className);
     const heightClass = hasHeight ? '' : 'h-[28rem]';
 
@@ -56,12 +55,11 @@ export const ExhibitCard: React.FC<ExhibitCardProps> = ({ item, onClick, index, 
         
         {/* Content */}
         <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 z-30">
-           <div className="flex items-center justify-between mb-2">
+           <div className="flex items-center justify-start mb-2">
              {/* High Contrast Exhibit Label */}
              <span className="text-xs font-bold tracking-[0.2em] text-white uppercase bg-stanford-primary px-3 py-1.5 rounded shadow-[0_0_15px_rgba(140,21,21,0.5)] border border-white/10">
                Exhibit 0{index + 1}
              </span>
-             <span className="text-3xl filter drop-shadow-lg">{item.icon}</span>
            </div>
            <h3 className="text-4xl md:text-5xl font-serif font-bold text-white mb-2 leading-none drop-shadow-xl tracking-tight">
              {item.title}
@@ -79,53 +77,39 @@ export const ExhibitCard: React.FC<ExhibitCardProps> = ({ item, onClick, index, 
     );
   }
 
+  // DEFAULT VARIANT: Clean, Text-Focused Card (No Poster Image)
   return (
     <div 
-      className={`group relative cursor-pointer h-[28rem] w-full perspective-1000 animate-fade-in-up opacity-0 ${className}`}
+      className={`group relative cursor-pointer w-full animate-fade-in-up opacity-0 flex ${className}`}
       onClick={() => onClick(item)}
       style={{ animationName: 'fadeInUp', animationFillMode: 'forwards', ...style }}
     >
-      <div className="relative h-full w-full rounded-xl bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-white/10 shadow-lg dark:shadow-2xl transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_rgba(140,21,21,0.2)] dark:group-hover:shadow-[0_20px_50px_rgba(140,21,21,0.3)] overflow-hidden flex flex-col">
+      <div className="relative w-full rounded-xl bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl dark:shadow-none dark:hover:shadow-[0_0_30px_rgba(140,21,21,0.15)] transition-all duration-300 ease-out group-hover:-translate-y-1 overflow-hidden flex flex-col p-6 md:p-8 h-full min-h-[16rem]">
         
-        {/* Poster Image Container */}
-        <div className="relative h-3/4 w-full overflow-hidden bg-gray-100 dark:bg-white/5">
-           <img 
-            src={item.posterUrl} 
-            alt={item.title}
-            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-           />
-           <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-60 dark:from-[#1e1e1e] dark:opacity-60 dark:group-hover:opacity-40 transition-opacity duration-300" />
-           
-           {/* Gallery Indicator */}
-           {item.gallery && item.gallery.length > 1 && (
-             <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-xs text-white flex items-center gap-1 shadow-md">
-               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-               <span>+{item.gallery.length - 1}</span>
-             </div>
-           )}
+        {/* Top: Number Only (Icon Removed) */}
+        <div className="flex items-start justify-start mb-6">
+           <span className="text-[10px] font-bold tracking-[0.2em] text-gray-400 dark:text-gray-600 uppercase group-hover:text-stanford-primary transition-colors">
+             Exhibit 0{index + 1}
+           </span>
         </div>
         
-        {/* Content Info */}
-        <div className="flex-1 p-5 flex flex-col justify-between relative z-10 bg-white dark:bg-[#1e1e1e]">
-          <div>
-            <div className="flex items-center justify-between mb-2">
-               <span className="text-xs font-bold tracking-widest text-stanford-primary uppercase">
-                 Exhibit 0{index + 1}
-               </span>
-               <span className="text-xl filter grayscale group-hover:grayscale-0 transition-all">{item.icon}</span>
-            </div>
-            <h3 className="text-xl font-serif font-bold text-gray-900 dark:text-white mb-1 leading-tight group-hover:text-stanford-primary transition-colors">
-              {item.title}
-            </h3>
-            <p className="text-gray-500 dark:text-gray-400 text-xs font-sans font-medium uppercase tracking-wide truncate">
-              {item.subtitle}
-            </p>
-          </div>
-          
-          <div className="mt-4 flex items-center text-sm font-semibold text-gray-600 dark:text-white/80 group-hover:text-stanford-primary dark:group-hover:text-white transition-colors">
-             <span>View Poster</span>
-             <svg className="w-4 h-4 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-          </div>
+        {/* Middle: Text Content */}
+        <div className="flex-1">
+          <h3 className="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-2 leading-tight group-hover:text-stanford-primary transition-colors">
+            {item.title}
+          </h3>
+          <p className="text-stanford-primary dark:text-red-400 text-xs font-sans font-bold uppercase tracking-wide mb-4 opacity-80">
+            {item.subtitle}
+          </p>
+          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-3 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors">
+            {item.description}
+          </p>
+        </div>
+        
+        {/* Bottom: Action */}
+        <div className="mt-6 pt-6 border-t border-gray-100 dark:border-white/5 flex items-center text-sm font-semibold text-gray-900 dark:text-white group-hover:text-stanford-primary dark:group-hover:text-red-400 transition-colors">
+           <span>Explore</span>
+           <svg className="w-4 h-4 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
         </div>
       </div>
     </div>

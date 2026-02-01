@@ -9,6 +9,28 @@ export const EXHIBIT_CATEGORIES: ExhibitCategory[] = [
     coverImage: 'https://i.postimg.cc/mgmWzQnT/AI-Learning-Hub-Redesign.png',
     items: [
       {
+        id: 'ai-course',
+        title: 'Introduction to AI',
+        subtitle: 'Beginners Course',
+        description: 'Start your AI journey here. This 10-part course covers everything from the basics of generative AI and its history to practical skills like prompting, understanding AI interfaces, and responsible use. Explore the future and build your personal AI strategy.',
+        details: ['10-part self-paced course.', 'Covers history, prompting, and ethics.', 'Build your personal AI strategy.'],
+        posterUrl: 'https://i.postimg.cc/XJvS1DGm/Screenshot-2026-02-01-at-1-05-59-PM.png',
+        gallery: ['https://i.postimg.cc/XJvS1DGm/Screenshot-2026-02-01-at-1-05-59-PM.png'],
+        icon: '🎓',
+        modules: [
+          { title: "What is generative AI?", url: "https://sites.google.com/law.stanford.edu/ailearninghub/ai-introduction-for-beginners/page-1" },
+          { title: "A Brief History of AI", url: "https://sites.google.com/law.stanford.edu/ailearninghub/ai-introduction-for-beginners/page-2" },
+          { title: "How it Works", url: "https://sites.google.com/law.stanford.edu/ailearninghub/ai-introduction-for-beginners/page-3" },
+          { title: "What it Can Create", url: "https://sites.google.com/law.stanford.edu/ailearninghub/ai-introduction-for-beginners/page-4" },
+          { title: "Responsible AI Use", url: "https://sites.google.com/law.stanford.edu/ailearninghub/ai-introduction-for-beginners/page-5" },
+          { title: "Mastering the Prompt", url: "https://sites.google.com/law.stanford.edu/ailearninghub/ai-introduction-for-beginners/page-6" },
+          { title: "Anatomy of a Modern AI Interface", url: "https://sites.google.com/law.stanford.edu/ailearninghub/ai-introduction-for-beginners/page-7" },
+          { title: "The Art of AI Data", url: "https://sites.google.com/law.stanford.edu/ailearninghub/ai-introduction-for-beginners/page-8" },
+          { title: "AI We Do Not Recommend (and Why)", url: "https://sites.google.com/law.stanford.edu/ailearninghub/ai-introduction-for-beginners/page-9" },
+          { title: "The Future and Your AI Strategy", url: "https://sites.google.com/law.stanford.edu/ailearninghub/ai-introduction-for-beginners/page-10" }
+        ]
+      },
+      {
         id: 'learning-hub',
         title: 'The AI Learning Hub',
         subtitle: 'DIY Training',
@@ -626,6 +648,57 @@ export const EXHIBIT_CATEGORIES: ExhibitCategory[] = [
   }
 ];
 
+// Content for About Page
+export const ABOUT_CONTENT = {
+  intro: "AI in the Library exists as both a physical display in the Robert Crown Law Library and this companion website. Fittingly, we used AI tools throughout its creation.",
+  sections: [
+    {
+      title: "How We Made This",
+      content: "We used Canva for visual planning, NotebookLM for videos and infographics, and Claude, Gemini, and ChatGPT for drafting text. All AI-generated content was reviewed, fact-checked, and refined by library staff using traditional research methods."
+    },
+    {
+      title: "This Site Is a Vibe Coding Example",
+      content: "This website demonstrates \"vibe coding\"—building software by describing what you want in plain language while an AI writes the code. We built it using Google AI Studio and host it through GitHub and Vercel. The site connects to three APIs: Google Gemini, Open Library, and Google Books."
+    },
+    {
+      title: "Why We Share Our Process",
+      content: "Transparency matters. By showing how we used these tools—including their limitations—we hope to encourage informed experimentation within the Stanford Law community."
+    }
+  ]
+};
+
+// Content for Acknowledgments Page
+export const ACKNOWLEDGMENTS_CONTENT = {
+  leadership: {
+    title: "Leadership & Vision",
+    parts: [
+        { text: "We extend our deepest gratitude to " },
+        { text: "Beth Williams", url: "https://law.stanford.edu/beth-williams/" },
+        { text: ", Dean of the Robert Crown Law Library, for her unwavering support, visionary guidance, and commitment to fostering innovation through our AI Ventures." }
+    ]
+  },
+  groups: [
+    {
+      title: "Staff Contributions",
+      members: [
+          { name: 'Will Huggins', url: 'https://law.stanford.edu/william-huggins/' },
+          { name: 'Taryn Marks', url: 'https://law.stanford.edu/taryn-marks/' },
+          { name: 'Nhatrang Nguyen', url: 'https://law.stanford.edu/nhatrang-nguyen/' },
+          { name: 'Lily Haupt', url: 'https://law.stanford.edu/lily-haupt/' }
+      ]
+    },
+    {
+      title: "Selected Reading Fulfillment & Processing",
+      subtitle: "Research & Development",
+      members: [
+          { name: 'Jake Kubrin', url: 'https://law.stanford.edu/jake-kubrin/' },
+          { name: 'Mark Jefferson', url: 'https://law.stanford.edu/mark-jefferson/' },
+          { name: 'Brenda Alfaro-Campos', url: 'https://law.stanford.edu/brenda-alfaro-campos/' }
+      ]
+    }
+  ]
+};
+
 // Flatten for AI context
 const FLATTENED_DATA = EXHIBIT_CATEGORIES.flatMap(cat => cat.items.map(item => ({
   ...item,
@@ -638,10 +711,20 @@ You are helpful, knowledgeable about law and technology, and concise.
 You have access to the following exhibit data:
 ${JSON.stringify(FLATTENED_DATA)}
 
+You also have access to the following About page content:
+${JSON.stringify(ABOUT_CONTENT)}
+
+You also have access to the following Acknowledgments page content:
+${JSON.stringify(ACKNOWLEDGMENTS_CONTENT)}
+
 Answer questions based on this data. 
 If asked about P.A.U.S.E., explain the 5 steps (Pinpoint, Assess, Use, Self-Assess, Enhance).
 If asked about V.E.T., explain Verify, Evaluate, Test.
 If asked about the "New York Times Rule", explain it exactly as defined in the exhibit.
 If asked about "Slop", explain the red flags for AI-generated books.
+If asked about how the site was built (Vibe Coding), use the About page content.
+If asked about who worked on the exhibit, use the Acknowledgments page content.
 Keep answers brief and strictly related to the exhibit content or general legal AI ethics.
 `;
+
+export const FEATURED_COURSE = EXHIBIT_CATEGORIES.find(c => c.id === 'resources')?.items.find(i => i.id === 'ai-course')!;
