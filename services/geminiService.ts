@@ -24,10 +24,12 @@ const getAI = () => {
   }
 
   // Priority 2: Standard Process Env (Node/CRA/Next)
+  // We check multiple standard prefixes to be robust across different Vercel deployment templates
   if (!apiKey && typeof process !== 'undefined' && process.env) {
     if (process.env.API_KEY) apiKey = process.env.API_KEY;
     else if (process.env.REACT_APP_API_KEY) apiKey = process.env.REACT_APP_API_KEY;
     else if (process.env.VITE_API_KEY) apiKey = process.env.VITE_API_KEY;
+    else if (process.env.NEXT_PUBLIC_API_KEY) apiKey = process.env.NEXT_PUBLIC_API_KEY;
   }
 
   // Clean the key (remove whitespace/newlines which is a common copy-paste error)
@@ -39,7 +41,7 @@ const getAI = () => {
   console.log("Gemini Service Init: Key found?", !!apiKey);
 
   if (!apiKey) {
-    console.error("Gemini Error: No API Key found in environment variables (VITE_API_KEY, REACT_APP_API_KEY, or API_KEY).");
+    console.error("Gemini Error: No API Key found in environment variables (VITE_API_KEY, NEXT_PUBLIC_API_KEY, REACT_APP_API_KEY, or API_KEY).");
     configError = "MISSING_KEY";
     return null;
   }
@@ -64,7 +66,7 @@ export const sendMessageToGemini = async (
     
     // Explicitly handle configuration errors
     if (!ai || configError === "MISSING_KEY") {
-      return "⚠️ System Config Error: API Key is missing. If you are the admin, please add 'VITE_API_KEY' to your Vercel Environment Variables and redeploy.";
+      return "⚠️ System Config Error: API Key is missing. Please go to Vercel Settings > Environment Variables and add 'VITE_API_KEY' (value: your Google AI key). Then redeploy.";
     }
     if (configError === "INIT_FAILED") {
       return "⚠️ System Error: Failed to initialize AI client.";
@@ -96,18 +98,31 @@ export const sendMessageToGemini = async (
     console.error("Gemini API Request Error:", error);
     
     const errorMessage = error.message || error.toString();
-    
-    // Handle specific API errors with detailed user feedback
-    if (errorMessage.includes('API key') || error.status === 400 || error.status === 403) {
-      return `⚠️ Access Error: API Key issue. Check Vercel 'VITE_API_KEY' setting. \n(Details: ${errorMessage})`;
+    const currentDomain = typeof window !== 'undefined' ? window.location.origin : 'unknown';
+
+    // 1. Handle Key Restrictions (This matches your screenshot error)
+    if (
+        errorMessage.includes('PERMISSION_DENIED') || 
+        errorMessage.includes('requests from referer') || 
+        errorMessage.includes('blocked') ||
+        error.status === 403
+    ) {
+      return `⚠️ Access Denied: Google blocked this request.\n\nGo to Google Cloud Console > Credentials > Edit Key.\n\nUnder "Website Restrictions", click ADD and paste:\n${currentDomain}/*`;
+    }
+
+    // 2. Handle Missing/Invalid Key
+    if (errorMessage.includes('API key') || error.status === 400) {
+      return `⚠️ Access Error: API Key is invalid. Check Vercel Environment Variables.`;
     }
     
+    // 3. Handle Overloaded/Busy
     if (error.status === 503 || error.status === 429) {
       return `⚠️ Service Busy: The AI model is currently overloaded. Please try again in 30 seconds. (Status: ${error.status})`;
     }
     
+    // 4. Handle Model Not Found (404)
     if (error.status === 404) {
-      return `⚠️ Configuration Error: The model 'gemini-3-flash-preview' was not found. Your API key might not have access to this preview model yet.`;
+      return `⚠️ Configuration Error: The model '${'gemini-3-flash-preview'}' was not found. Your API key might not have access to this preview model yet.`;
     }
     
     return `⚠️ Technical Difficulty: ${errorMessage}`;
