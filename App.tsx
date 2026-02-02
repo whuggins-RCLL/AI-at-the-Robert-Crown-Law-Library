@@ -300,12 +300,7 @@ const App = () => {
 
       {/* Footer */}
       <footer className="relative z-10 py-12 text-center text-gray-500 text-sm border-t border-gray-200 dark:border-white/5 bg-gray-100 dark:bg-black/20">
-        <p>&copy; 2026 Robert Crown Law Library. All Rights Reserved.</p>
-        <div className="mt-4 flex justify-center space-x-6 opacity-70 items-center">
-           <span>Privacy</span>
-           <span>Accessibility</span>
-           <span>Stanford University</span>
-        </div>
+        <p>&copy; Stanford University, Stanford, California 94305.</p>
       </footer>
 
       {/* Overlays */}
