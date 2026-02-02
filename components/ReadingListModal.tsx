@@ -32,8 +32,8 @@ export const ReadingListModal: React.FC<ReadingListModalProps> = ({ isOpen, onCl
   };
 
   const handleEmail = () => {
-    const subject = encodeURIComponent("My Reading List - Crown Law Digital Exhibit");
-    const body = encodeURIComponent("Here is my reading list from the Crown Law Library Digital Exhibit:\n\n" + formatCitations());
+    const subject = encodeURIComponent("My Reading List - Robert Crown Law Library Digital Exhibit");
+    const body = encodeURIComponent("Here is my reading list from the Robert Crown Law Library Digital Exhibit:\n\n" + formatCitations());
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
 
@@ -44,7 +44,7 @@ export const ReadingListModal: React.FC<ReadingListModalProps> = ({ isOpen, onCl
     doc.setFont("times", "bold");
     doc.setFontSize(22);
     doc.setTextColor(140, 21, 21); // Stanford Red
-    doc.text("Crown Law Library", 20, 20);
+    doc.text("Robert Crown Law Library", 20, 20);
     
     doc.setFont("helvetica", "normal");
     doc.setFontSize(14);
@@ -135,7 +135,7 @@ export const ReadingListModal: React.FC<ReadingListModalProps> = ({ isOpen, onCl
         {/* Header */}
         <div className="p-6 border-b border-gray-100 dark:border-white/5 flex justify-between items-center bg-gray-50 dark:bg-[#222]">
            <div>
-             <span className="text-stanford-primary text-xs font-bold uppercase tracking-widest block mb-1">Crown Law Library</span>
+             <span className="text-stanford-primary text-xs font-bold uppercase tracking-widest block mb-1">Robert Crown Law Library</span>
              <h2 className="text-2xl font-serif font-bold text-gray-900 dark:text-white">My Reading List</h2>
            </div>
            <button onClick={onClose} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">

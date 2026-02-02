@@ -91,6 +91,16 @@ const App = () => {
           </div>
           
           <div className="flex items-center gap-3 flex-wrap justify-end">
+             {/* AI Learning Hub Link */}
+             <a 
+               href="https://sites.google.com/law.stanford.edu/ailearninghub/home"
+               target="_blank"
+               rel="noopener noreferrer"
+               className="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-stanford-primary dark:hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5"
+             >
+               AI Learning Hub
+             </a>
+
              {/* About Link */}
              <button 
                onClick={() => {

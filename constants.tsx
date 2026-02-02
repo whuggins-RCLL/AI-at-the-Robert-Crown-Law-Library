@@ -91,11 +91,11 @@ export const EXHIBIT_CATEGORIES: ExhibitCategory[] = [
         ],
         posterUrl: 'https://i.postimg.cc/dV5ck8fC/NYT-Rule-Original.png',
         gallery: [
-          'https://i.postimg.cc/vZYdZP3z/14.png',
-          'https://i.postimg.cc/Vkfck7DZ/15.png',
-          'https://i.postimg.cc/8zpVzytn/16.png',
-          'https://i.postimg.cc/0ykqytcB/17.png',
-          'https://i.postimg.cc/pLWtL0qS/18.png'
+          'https://i.postimg.cc/DwmFvy7y/15.png',
+          'https://i.postimg.cc/YCjkrqtp/16.png',
+          'https://i.postimg.cc/YCjkrqt2/17.png',
+          'https://i.postimg.cc/T3hGdYTd/18.png',
+          'https://i.postimg.cc/dVDvstJ0/19.png'
         ],
         galleryLayout: 'vertical',
         contentImage: 'https://i.postimg.cc/dV5ck8fC/NYT-Rule-Original.png',
