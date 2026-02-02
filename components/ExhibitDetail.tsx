@@ -247,9 +247,17 @@ export const ExhibitDetail: React.FC<ExhibitDetailProps> = ({ item, category, on
                 </span>
                 Display Books
                </h4>
-               <p className="text-gray-500 dark:text-gray-400 text-sm ml-12">
-                 Explore selected readings available at the Robert Crown Law Library.
-               </p>
+               <div className="ml-12 mt-3">
+                 <p className="text-gray-500 dark:text-gray-400 text-sm mb-3">
+                   Explore selected readings available at the Robert Crown Law Library.
+                 </p>
+                 <div className="inline-flex items-start gap-2 p-3 rounded-lg bg-stanford-primary/5 border border-stanford-primary/10 text-sm text-gray-700 dark:text-gray-300 max-w-2xl">
+                   <svg className="w-5 h-5 text-stanford-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                   <span>
+                     <strong>To export a reading list:</strong> Click the bookmark icon (<svg className="w-3.5 h-3.5 inline-block align-text-bottom text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>) on any books you want to save. Then click the <strong>"View & Export List"</strong> button to download a PDF or email the citations to yourself.
+                   </span>
+                 </div>
+               </div>
             </div>
 
             {/* Reading List Export Button */}
