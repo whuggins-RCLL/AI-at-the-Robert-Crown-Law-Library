@@ -304,6 +304,75 @@ const App = () => {
                  );
               })}
             </div>
+            
+            {/* Stanford University Resources Section (Only for AI at Stanford Category) */}
+            {selectedCategory.id === 'stanford-ai' && (
+              <div className="mt-16 pt-10 border-t border-gray-200 dark:border-white/10 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                  <div>
+                    <h3 className="text-2xl font-serif font-bold text-gray-900 dark:text-white flex items-center gap-3">
+                      <span className="p-2 rounded-lg bg-stanford-primary/10 text-stanford-primary">
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                      </span>
+                      University Resources
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 ml-1">
+                      Available AI tools and guidelines for the Stanford community.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <a href="https://uit.stanford.edu/service/gsuite/geminiapp" target="_blank" rel="noopener noreferrer" className="p-5 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-stanford-primary/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
+                    <div className="mb-3 p-2 w-fit rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 group-hover:bg-stanford-primary group-hover:text-white transition-colors">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                    </div>
+                    <h4 className="font-bold text-lg text-gray-900 dark:text-white group-hover:text-stanford-primary dark:group-hover:text-red-400 transition-colors mb-1">Gemini</h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-snug">Enterprise access via Google Workspace</p>
+                    <div className="mt-auto pt-3 text-xs font-bold text-gray-400 group-hover:text-stanford-primary dark:group-hover:text-red-400 flex items-center gap-1">
+                      <span>Access Tool</span>
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </div>
+                  </a>
+
+                  <a href="https://uit.stanford.edu/service/gsuite/notebooklm" target="_blank" rel="noopener noreferrer" className="p-5 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-stanford-primary/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
+                     <div className="mb-3 p-2 w-fit rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 group-hover:bg-stanford-primary group-hover:text-white transition-colors">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                    </div>
+                    <h4 className="font-bold text-lg text-gray-900 dark:text-white group-hover:text-stanford-primary dark:group-hover:text-red-400 transition-colors mb-1">NotebookLM</h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-snug">AI Research Assistant & Note Taking</p>
+                    <div className="mt-auto pt-3 text-xs font-bold text-gray-400 group-hover:text-stanford-primary dark:group-hover:text-red-400 flex items-center gap-1">
+                      <span>Access Tool</span>
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </div>
+                  </a>
+
+                   <a href="https://uit.stanford.edu/service/microsoft365/mscopilotchat" target="_blank" rel="noopener noreferrer" className="p-5 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-stanford-primary/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
+                     <div className="mb-3 p-2 w-fit rounded-lg bg-cyan-50 dark:bg-cyan-900/20 text-cyan-600 dark:text-cyan-400 group-hover:bg-stanford-primary group-hover:text-white transition-colors">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    </div>
+                    <h4 className="font-bold text-lg text-gray-900 dark:text-white group-hover:text-stanford-primary dark:group-hover:text-red-400 transition-colors mb-1">Microsoft Co-Pilot</h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-snug">Chat Protection for Enterprise</p>
+                    <div className="mt-auto pt-3 text-xs font-bold text-gray-400 group-hover:text-stanford-primary dark:group-hover:text-red-400 flex items-center gap-1">
+                      <span>Access Tool</span>
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </div>
+                  </a>
+
+                   <a href="https://uit.stanford.edu/security/responsibleai" target="_blank" rel="noopener noreferrer" className="p-5 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-stanford-primary/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
+                     <div className="mb-3 p-2 w-fit rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 group-hover:bg-stanford-primary group-hover:text-white transition-colors">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h4 className="font-bold text-lg text-gray-900 dark:text-white group-hover:text-stanford-primary dark:group-hover:text-red-400 transition-colors mb-1">Responsible AI</h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-snug">Stanford Security & Usage Guidelines</p>
+                    <div className="mt-auto pt-3 text-xs font-bold text-gray-400 group-hover:text-stanford-primary dark:group-hover:text-red-400 flex items-center gap-1">
+                      <span>Read Policy</span>
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </main>
