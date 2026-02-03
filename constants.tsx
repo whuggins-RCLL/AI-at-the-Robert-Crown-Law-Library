@@ -76,16 +76,16 @@ export const EXHIBIT_CATEGORIES: ExhibitCategory[] = [
     id: 'rules',
     title: 'Recommended Rules',
     subtitle: 'Frameworks & Policies',
-    description: 'Essential frameworks like P.A.U.S.E. and the NYT Rule.',
+    description: 'Essential frameworks like PAUSE and the NYT Rule.',
     coverImage: 'https://i.postimg.cc/dV5ck8fC/NYT-Rule-Original.png',
     items: [
       {
         id: 'pause-nyt',
         title: 'Recommended Rules',
-        subtitle: 'P.A.U.S.E. Framework & The NYT Rule',
-        description: 'Adopt these two essential frameworks for safe and ethical AI usage. The P.A.U.S.E. framework guides you through a 5-step process to ensuring effectiveness, while the NYT Rule provides a simple ethical litmus test.',
+        subtitle: 'PAUSE Framework & The NYT Rule',
+        description: 'Adopt these two essential frameworks for safe and ethical AI usage. The PAUSE framework guides you through a 5-step process to ensuring effectiveness, while the NYT Rule provides a simple ethical litmus test.',
         details: [
-          'P.A.U.S.E.: Pinpoint, Assess, Use, Self-Assess, Enhance.',
+          'PAUSE: Pinpoint, Assess, Use, Self-Assess, Enhance.',
           'NYT Rule: Would you want your AI use on the front page?',
           'Always keep a human in the loop.'
         ],
@@ -101,7 +101,7 @@ export const EXHIBIT_CATEGORIES: ExhibitCategory[] = [
         contentImage: 'https://i.postimg.cc/dV5ck8fC/NYT-Rule-Original.png',
         icon: '🛑',
         links: [
-          { title: 'Read more about the P.A.U.S.E. Rule', url: 'https://sites.google.com/law.stanford.edu/ailearninghub/the-pause-rule' }
+          { title: 'Read more about the PAUSE Rule', url: 'https://sites.google.com/law.stanford.edu/ailearninghub/the-pause-rule' }
         ]
       }
     ]
@@ -289,13 +289,18 @@ export const EXHIBIT_CATEGORIES: ExhibitCategory[] = [
         id: 'ai-playground',
         title: 'AI Playground',
         subtitle: 'Secure GenAI Access',
-        description: 'Stanford\'s internal, secure platform for accessing generative AI models like GPT-4, keeping institutional data safe.',
-        details: ['Secure access.', 'Data privacy.', 'Multiple models.'],
+        description: 'Stanford\'s secure portal to the world\'s most powerful AI models. Safely access international tools like DeepSeek alongside US leaders like OpenAI, Anthropic, and Google. Leverage specialized "Agents" to chat directly with the Stanford Admin Guide and Faculty Handbook.',
+        details: [
+          'Frontier Models: Access GPT-5.2, Claude 4.5 Sonnet, Gemini, Llama, and DeepSeek.',
+          'Specialized Agents: Query the Admin Guide or Faculty Handbook.',
+          'Data Privacy: Safer environment, but still apply the NYT Rule.'
+        ],
         posterUrl: 'https://i.postimg.cc/FFyYM9GX/5.png',
         gallery: ['https://i.postimg.cc/FFyYM9GX/5.png'],
         icon: '🔒',
         links: [
-          { title: 'Launch AI Playground', url: 'https://uit.stanford.edu/aiplayground' }
+          { title: 'Launch AI Playground', url: 'https://uit.stanford.edu/aiplayground' },
+          { title: 'SLS Guide', url: 'https://sites.google.com/law.stanford.edu/ailearninghub/sls-training-center/stanford-ai-playground' }
         ]
       },
       {
@@ -718,7 +723,7 @@ You also have access to the following Acknowledgments page content:
 ${JSON.stringify(ACKNOWLEDGMENTS_CONTENT)}
 
 Answer questions based on this data. 
-If asked about P.A.U.S.E., explain the 5 steps (Pinpoint, Assess, Use, Self-Assess, Enhance).
+If asked about PAUSE, explain the 5 steps (Pinpoint, Assess, Use, Self-Assess, Enhance).
 If asked about V.E.T., explain Verify, Evaluate, Test.
 If asked about the "New York Times Rule", explain it exactly as defined in the exhibit.
 If asked about "Slop", explain the red flags for AI-generated books.
