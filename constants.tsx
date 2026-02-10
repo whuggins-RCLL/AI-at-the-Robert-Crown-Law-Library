@@ -641,6 +641,15 @@ export const EXHIBIT_CATEGORIES: ExhibitCategory[] = [
             link: "https://searchworks.stanford.edu/view/in00000869722",
             customCoverUrl: "https://i.postimg.cc/1RqLp1qD/The-AI-and-Data-Revolution.jpg",
             description: "Technology analyst Martin De Saulles provides an authoritative guide to understanding how AI-driven innovations represent a fundamental step-change in how organizations extract value from data. Tracing 30 years of evolution from mass media and the internet through mobile computing, social networks, and generative AI, this book combines established frameworks with real-world case studies."
+          },
+          { 
+            title: "New Horizons in Artificial Intelligence in Libraries", 
+            author: "Edmund Balnaves et al. (eds.)", 
+            publisher: "De Gruyter Saur", 
+            date: "2024", 
+            isbn: "9783111336435",
+            link: "https://searchworks.stanford.edu/view/in00000996315",
+            description: "This publication provides an opportunity to explore developing new library AI paradigms, including present use case practical implementation and opportunities on the horizon. It addresses current large ethics questions and needs for transparency, scenario planning, and implications of bias as library AI systems are developed and implemented presently and for our collective future."
           }
         ],
         icon: '📚'
