@@ -201,28 +201,6 @@ export const ExhibitDetail: React.FC<ExhibitDetailProps> = ({ item, category, on
         </div>
       </div>
 
-      {/* Embedded Webpage Section - Full Width Panel */}
-      {item.embedUrl && (
-        <div className="w-full mt-12 border-t border-gray-200 dark:border-white/10 pt-10">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="p-2 rounded-lg bg-stanford-primary/10 text-stanford-primary">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-            </span>
-            <h4 className="text-2xl font-serif font-bold text-gray-900 dark:text-white">
-              Interactive Content
-            </h4>
-          </div>
-          <div className="w-full h-[800px] rounded-xl overflow-hidden border border-gray-200 dark:border-white/10 bg-white shadow-lg">
-            <iframe 
-              src={item.embedUrl} 
-              className="w-full h-full border-0" 
-              title="Embedded Content"
-              allow="autoplay; fullscreen"
-            ></iframe>
-          </div>
-        </div>
-      )}
-
       {/* Modules Section - Full Width Panel */}
       {item.modules && item.modules.length > 0 && (
          <div className="w-full mt-12 border-t border-gray-200 dark:border-white/10 pt-10">

@@ -26,7 +26,9 @@ export const EXHIBIT_CATEGORIES: ExhibitCategory[] = [
         description: 'Explore a comprehensive collection of AI resources curated for the Stanford Law School community. This hub provides access to tools, guidelines, and support materials to help you effectively integrate AI into your academic and professional work.',
         details: ['Curated AI tools and platforms.', 'Guidelines for academic use.', 'Support and training materials.'],
         icon: '📚',
-        embedUrl: 'https://sites.google.com/law.stanford.edu/ailearninghub/ai-resources-for-students'
+        links: [
+          { title: 'View AI Resources', url: 'https://sites.google.com/law.stanford.edu/ailearninghub/ai-resources-for-students' }
+        ]
       },
       {
         id: 'ai-course',

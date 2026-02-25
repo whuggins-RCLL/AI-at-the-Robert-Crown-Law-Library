@@ -20,7 +20,6 @@ export interface ExhibitItem {
   galleryLayout?: 'carousel' | 'vertical'; // Layout mode for the gallery
   contentImage?: string; // Optional large image to display in the content area (right side)
   videoUrl?: string; // Optional embed URL for video content
-  embedUrl?: string; // Optional embed URL for webpage content
   books?: Book[]; // Optional list of display books
   icon: string;
   links?: { title: string; url: string }[]; // Optional list of external links
