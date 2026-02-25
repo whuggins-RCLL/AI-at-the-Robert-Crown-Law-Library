@@ -15,7 +15,8 @@ export const ExhibitModal: React.FC<ExhibitModalProps> = ({ item, onClose }) => 
 
   if (!item) return null;
 
-  const images = item.gallery ? item.gallery : [item.posterUrl];
+  const images = item.gallery ? item.gallery : (item.posterUrl ? [item.posterUrl] : []);
+  const hasImages = images.length > 0;
   const hasMultipleImages = images.length > 1;
 
   const nextImage = (e: React.MouseEvent) => {
@@ -46,41 +47,43 @@ export const ExhibitModal: React.FC<ExhibitModalProps> = ({ item, onClose }) => 
         </button>
 
         {/* Left Side: Poster Viewer */}
-        <div className="w-full md:w-2/3 h-1/2 md:h-full bg-black relative group flex items-center justify-center p-4">
-           <img 
-            src={images[currentImageIndex]} 
-            alt={item.title} 
-            className="max-h-full max-w-full object-contain shadow-2xl"
-           />
-           
-           {hasMultipleImages && (
-             <>
-               <button 
-                 onClick={prevImage}
-                 className="absolute left-4 p-3 rounded-full bg-black/50 text-white hover:bg-stanford-primary transition-colors opacity-0 group-hover:opacity-100"
-               >
-                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
-               </button>
-               <button 
-                 onClick={nextImage}
-                 className="absolute right-4 p-3 rounded-full bg-black/50 text-white hover:bg-stanford-primary transition-colors opacity-0 group-hover:opacity-100"
-               >
-                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-               </button>
-               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                 {images.map((_, idx) => (
-                   <div 
-                     key={idx} 
-                     className={`w-2 h-2 rounded-full transition-colors ${idx === currentImageIndex ? 'bg-stanford-primary' : 'bg-white/30'}`}
-                   />
-                 ))}
-               </div>
-             </>
-           )}
-        </div>
+        {hasImages && (
+          <div className="w-full md:w-2/3 h-1/2 md:h-full bg-black relative group flex items-center justify-center p-4">
+             <img 
+              src={images[currentImageIndex]} 
+              alt={item.title} 
+              className="max-h-full max-w-full object-contain shadow-2xl"
+             />
+             
+             {hasMultipleImages && (
+               <>
+                 <button 
+                   onClick={prevImage}
+                   className="absolute left-4 p-3 rounded-full bg-black/50 text-white hover:bg-stanford-primary transition-colors opacity-0 group-hover:opacity-100"
+                 >
+                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+                 </button>
+                 <button 
+                   onClick={nextImage}
+                   className="absolute right-4 p-3 rounded-full bg-black/50 text-white hover:bg-stanford-primary transition-colors opacity-0 group-hover:opacity-100"
+                 >
+                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+                 </button>
+                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                   {images.map((_, idx) => (
+                     <div 
+                       key={idx} 
+                       className={`w-2 h-2 rounded-full transition-colors ${idx === currentImageIndex ? 'bg-stanford-primary' : 'bg-white/30'}`}
+                     />
+                   ))}
+                 </div>
+               </>
+             )}
+          </div>
+        )}
 
         {/* Right Side: Content */}
-        <div className="w-full md:w-1/3 h-1/2 md:h-full overflow-y-auto bg-[#1a1a1a] p-8 border-l border-white/5">
+        <div className={`w-full ${hasImages ? 'md:w-1/3' : 'md:w-full max-w-4xl mx-auto'} h-1/2 md:h-full overflow-y-auto bg-[#1a1a1a] p-8 border-l border-white/5`}>
           <div className="mb-6">
             <span className="text-stanford-primary text-xs font-bold uppercase tracking-[0.2em] mb-2 block">
               Exhibit Detail

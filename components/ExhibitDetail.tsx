@@ -14,7 +14,8 @@ interface ExhibitDetailProps {
 export const ExhibitDetail: React.FC<ExhibitDetailProps> = ({ item, category, onBack, readingList, onToggleBook, onOpenReadingList }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const images = item.gallery ? item.gallery : [item.posterUrl];
+  const images = item.gallery ? item.gallery : (item.posterUrl ? [item.posterUrl] : []);
+  const hasImages = images.length > 0;
   const hasMultipleImages = images.length > 1;
   const isVerticalGallery = item.galleryLayout === 'vertical';
 
@@ -54,84 +55,86 @@ export const ExhibitDetail: React.FC<ExhibitDetailProps> = ({ item, category, on
 
       <div className="flex flex-col lg:flex-row gap-12 mb-16">
         {/* Left Column: Visuals */}
-        <div className="w-full lg:w-5/12 flex flex-col gap-4">
-           {isVerticalGallery ? (
-             /* Vertical List Layout */
-             <div className="flex flex-col gap-6">
-                {images.map((img, idx) => (
-                  <div key={idx} className="relative rounded-xl overflow-hidden shadow-lg border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-black/20">
-                     <img 
-                       src={img} 
-                       alt={`${item.title} - Image ${idx + 1}`} 
-                       className="w-full h-auto object-contain"
-                     />
-                  </div>
-                ))}
-             </div>
-           ) : (
-             /* Default Carousel Layout */
-             <>
-               <div className="relative rounded-xl overflow-hidden shadow-2xl bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-white/10 group">
-                 <img 
-                  src={images[currentImageIndex]} 
-                  alt={item.title} 
-                  className="w-full h-auto"
-                 />
-                 
-                 {/* Carousel Controls - Always Visible */}
-                 {hasMultipleImages && (
-                   <>
-                     <button 
-                       onClick={prevImage}
-                       className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 dark:bg-black/60 text-gray-900 dark:text-white hover:bg-stanford-primary hover:text-white dark:hover:bg-stanford-primary shadow-lg transition-all"
-                       aria-label="Previous image"
-                     >
-                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
-                     </button>
-                     <button 
-                       onClick={nextImage}
-                       className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 dark:bg-black/60 text-gray-900 dark:text-white hover:bg-stanford-primary hover:text-white dark:hover:bg-stanford-primary shadow-lg transition-all"
-                       aria-label="Next image"
-                     >
-                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-                     </button>
-                     
-                     {/* Badge Counter */}
-                     <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white tracking-wider border border-white/10">
-                       {currentImageIndex + 1} / {images.length}
-                     </div>
-                   </>
-                 )}
-               </div>
-
-               {/* Thumbnails Gallery */}
-               {hasMultipleImages && (
-                 <div className="grid grid-cols-4 gap-3">
-                   {images.map((img, idx) => (
-                     <button
-                       key={idx}
-                       onClick={() => setCurrentImageIndex(idx)}
-                       className={`relative rounded-lg overflow-hidden aspect-square border-2 transition-all duration-300 ${
-                         idx === currentImageIndex 
-                           ? 'border-stanford-primary ring-2 ring-stanford-primary/30' 
-                           : 'border-transparent opacity-60 hover:opacity-100 hover:border-gray-300 dark:hover:border-white/30'
-                       }`}
-                     >
+        {hasImages && (
+          <div className="w-full lg:w-5/12 flex flex-col gap-4">
+             {isVerticalGallery ? (
+               /* Vertical List Layout */
+               <div className="flex flex-col gap-6">
+                  {images.map((img, idx) => (
+                    <div key={idx} className="relative rounded-xl overflow-hidden shadow-lg border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-black/20">
                        <img 
                          src={img} 
-                         alt={`Thumbnail ${idx + 1}`} 
-                         className="w-full h-full object-cover"
+                         alt={`${item.title} - Image ${idx + 1}`} 
+                         className="w-full h-auto object-contain"
                        />
-                     </button>
-                   ))}
+                    </div>
+                  ))}
+               </div>
+             ) : (
+               /* Default Carousel Layout */
+               <>
+                 <div className="relative rounded-xl overflow-hidden shadow-2xl bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-white/10 group">
+                   <img 
+                    src={images[currentImageIndex]} 
+                    alt={item.title} 
+                    className="w-full h-auto"
+                   />
+                   
+                   {/* Carousel Controls - Always Visible */}
+                   {hasMultipleImages && (
+                     <>
+                       <button 
+                         onClick={prevImage}
+                         className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 dark:bg-black/60 text-gray-900 dark:text-white hover:bg-stanford-primary hover:text-white dark:hover:bg-stanford-primary shadow-lg transition-all"
+                         aria-label="Previous image"
+                       >
+                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+                       </button>
+                       <button 
+                         onClick={nextImage}
+                         className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 dark:bg-black/60 text-gray-900 dark:text-white hover:bg-stanford-primary hover:text-white dark:hover:bg-stanford-primary shadow-lg transition-all"
+                         aria-label="Next image"
+                       >
+                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+                       </button>
+                       
+                       {/* Badge Counter */}
+                       <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white tracking-wider border border-white/10">
+                         {currentImageIndex + 1} / {images.length}
+                       </div>
+                     </>
+                   )}
                  </div>
-               )}
-             </>
-           )}
-        </div>
+
+                 {/* Thumbnails Gallery */}
+                 {hasMultipleImages && (
+                   <div className="grid grid-cols-4 gap-3">
+                     {images.map((img, idx) => (
+                       <button
+                         key={idx}
+                         onClick={() => setCurrentImageIndex(idx)}
+                         className={`relative rounded-lg overflow-hidden aspect-square border-2 transition-all duration-300 ${
+                           idx === currentImageIndex 
+                             ? 'border-stanford-primary ring-2 ring-stanford-primary/30' 
+                             : 'border-transparent opacity-60 hover:opacity-100 hover:border-gray-300 dark:hover:border-white/30'
+                         }`}
+                       >
+                         <img 
+                           src={img} 
+                           alt={`Thumbnail ${idx + 1}`} 
+                           className="w-full h-full object-cover"
+                         />
+                       </button>
+                     ))}
+                   </div>
+                 )}
+               </>
+             )}
+          </div>
+        )}
 
         {/* Right Column: Content */}
-        <div className="w-full lg:w-7/12 space-y-10">
+        <div className={`w-full ${hasImages ? 'lg:w-7/12' : 'lg:w-full max-w-4xl mx-auto'} space-y-10`}>
           
           {/* Featured Content Image (Large Right Side) */}
           {item.contentImage && (
@@ -197,6 +200,28 @@ export const ExhibitDetail: React.FC<ExhibitDetailProps> = ({ item, category, on
           )}
         </div>
       </div>
+
+      {/* Embedded Webpage Section - Full Width Panel */}
+      {item.embedUrl && (
+        <div className="w-full mt-12 border-t border-gray-200 dark:border-white/10 pt-10">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="p-2 rounded-lg bg-stanford-primary/10 text-stanford-primary">
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+            </span>
+            <h4 className="text-2xl font-serif font-bold text-gray-900 dark:text-white">
+              Interactive Content
+            </h4>
+          </div>
+          <div className="w-full h-[800px] rounded-xl overflow-hidden border border-gray-200 dark:border-white/10 bg-white shadow-lg">
+            <iframe 
+              src={item.embedUrl} 
+              className="w-full h-full border-0" 
+              title="Embedded Content"
+              allow="autoplay; fullscreen"
+            ></iframe>
+          </div>
+        </div>
+      )}
 
       {/* Modules Section - Full Width Panel */}
       {item.modules && item.modules.length > 0 && (

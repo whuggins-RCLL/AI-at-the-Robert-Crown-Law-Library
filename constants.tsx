@@ -9,6 +9,26 @@ export const EXHIBIT_CATEGORIES: ExhibitCategory[] = [
     coverImage: 'https://i.postimg.cc/mgmWzQnT/AI-Learning-Hub-Redesign.png',
     items: [
       {
+        id: 'ai-essentials',
+        title: 'AI Essentials Training',
+        subtitle: 'Unlock AI Tools',
+        description: "Welcome to your essential intro to using generative AI, brought to you by the Robert Crown Law Library. In this training, you’ll learn the basics of effective and responsible AI use – for any AI platform. We don’t dive into any specific AI tool, but talk generally about how to approach AI. You'll learn essential AI definitions, how to confidently explain what AI companies do with your data, and a process for deciding when to use AI to do a task. This training will take approximately 10-15 minutes for you to complete. We strongly encourage you to review these training videos before you sign up for any AI tool; but you may sign up here first if you'd prefer.",
+        details: ['Recommended for tool access.', 'Covers fundamentals & ethics.', 'Unlock premium AI tools.'],
+        icon: '🔑',
+        links: [
+          { title: 'Start AI Essentials Training', url: 'https://docs.google.com/forms/d/e/1FAIpQLSePvj7_WIYEekokrf_NTRHB1qnXiCVh6sVy7h6zKdG6gcqSsA/viewform' }
+        ]
+      },
+      {
+        id: 'ai-resources',
+        title: 'AI Resources',
+        subtitle: 'For Students, Faculty & Staff',
+        description: 'Explore a comprehensive collection of AI resources curated for the Stanford Law School community. This hub provides access to tools, guidelines, and support materials to help you effectively integrate AI into your academic and professional work.',
+        details: ['Curated AI tools and platforms.', 'Guidelines for academic use.', 'Support and training materials.'],
+        icon: '📚',
+        embedUrl: 'https://sites.google.com/law.stanford.edu/ailearninghub/ai-resources-for-students'
+      },
+      {
         id: 'ai-course',
         title: 'Introduction to AI',
         subtitle: 'Beginners Course',
@@ -649,6 +669,7 @@ export const EXHIBIT_CATEGORIES: ExhibitCategory[] = [
             date: "2024", 
             isbn: "9783111336435",
             link: "https://searchworks.stanford.edu/view/in00000996315",
+            customCoverUrl: "https://i.postimg.cc/VNgrPdzN/content-(1).jpg",
             description: "This publication provides an opportunity to explore developing new library AI paradigms, including present use case practical implementation and opportunities on the horizon. It addresses current large ethics questions and needs for transparency, scenario planning, and implications of bias as library AI systems are developed and implemented presently and for our collective future."
           }
         ],
