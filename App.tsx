@@ -30,6 +30,92 @@ const App = () => {
     }
   }, [isDarkMode]);
 
+  // Sync state from hash on mount and hashchange
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      
+      if (!hash) {
+        setSelectedCategory(null);
+        setSelectedExhibit(null);
+        setShowAbout(false);
+        setShowAcknowledgments(false);
+        return;
+      }
+
+      if (hash === 'about') {
+        setSelectedCategory(null);
+        setSelectedExhibit(null);
+        setShowAbout(true);
+        setShowAcknowledgments(false);
+        return;
+      }
+
+      if (hash === 'acknowledgments') {
+        setSelectedCategory(null);
+        setSelectedExhibit(null);
+        setShowAbout(false);
+        setShowAcknowledgments(true);
+        return;
+      }
+
+      // Check if it's a category
+      const category = EXHIBIT_CATEGORIES.find(c => c.id === hash);
+      if (category) {
+        setSelectedCategory(category);
+        setSelectedExhibit(null);
+        setShowAbout(false);
+        setShowAcknowledgments(false);
+        // Auto-select if there is only one item to reduce clicks
+        if (category.items.length === 1) {
+          setSelectedExhibit(category.items[0]);
+        }
+        return;
+      }
+
+      // Check if it's an exhibit item
+      for (const cat of EXHIBIT_CATEGORIES) {
+        const item = cat.items.find(i => i.id === hash);
+        if (item) {
+          setSelectedCategory(cat);
+          setSelectedExhibit(item);
+          setShowAbout(false);
+          setShowAcknowledgments(false);
+          return;
+        }
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange(); // Initial load
+
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // Sync hash from state
+  useEffect(() => {
+    let newHash = '';
+    if (showAbout) {
+      newHash = 'about';
+    } else if (showAcknowledgments) {
+      newHash = 'acknowledgments';
+    } else if (selectedExhibit) {
+      newHash = selectedExhibit.id;
+    } else if (selectedCategory) {
+      newHash = selectedCategory.id;
+    }
+
+    const currentHash = window.location.hash.replace('#', '');
+    if (currentHash !== newHash) {
+      if (newHash) {
+        window.location.hash = newHash;
+      } else {
+        // Remove hash without scrolling to top
+        window.history.pushState(null, '', window.location.pathname + window.location.search);
+      }
+    }
+  }, [selectedCategory, selectedExhibit, showAbout, showAcknowledgments]);
+
   const handleBackToHome = () => {
     setSelectedCategory(null);
     setSelectedExhibit(null);
