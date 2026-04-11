@@ -41,3 +41,9 @@ export interface ChatMessage {
   text: string;
   isThinking?: boolean;
 }
+
+export interface AIModelOption {
+  id: string;
+  label: string;
+  description: string;
+}

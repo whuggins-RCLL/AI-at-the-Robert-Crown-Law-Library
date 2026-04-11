@@ -15,6 +15,11 @@ View your app in AI Studio: https://ai.studio/apps/3642eee0-2b4b-480f-a533-0fe01
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
+2. Set an API key in [.env.local](.env.local):
+   - `VITE_API_KEY=your_google_ai_api_key`
+   - (Fallbacks supported by the app: `API_KEY`, `REACT_APP_API_KEY`, `NEXT_PUBLIC_API_KEY`)
+3. (Optional) Customize the list of selectable AI models in `constants.tsx` by editing `AI_MODEL_OPTIONS`.
+   - Each model needs an `id` (actual model name sent to Google GenAI), user-facing `label`, and `description`.
+   - The chat UI model picker is in `components/AICurator.tsx`.
+4. Run the app:
    `npm run dev`

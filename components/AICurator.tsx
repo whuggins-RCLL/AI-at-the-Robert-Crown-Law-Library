@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Markdown from 'react-markdown';
 import { sendMessageToGemini } from '../services/geminiService';
 import { ChatMessage } from '../types';
+import { AI_MODEL_OPTIONS } from '../constants';
 
 interface AICuratorProps {
   isOpen: boolean;
@@ -14,6 +15,7 @@ export const AICurator: React.FC<AICuratorProps> = ({ isOpen, onClose }) => {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedModel, setSelectedModel] = useState<string>(AI_MODEL_OPTIONS[0].id);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export const AICurator: React.FC<AICuratorProps> = ({ isOpen, onClose }) => {
     setIsLoading(true);
 
     // Call Gemini
-    const response = await sendMessageToGemini(newHistory, userText);
+    const response = await sendMessageToGemini(newHistory, userText, selectedModel);
 
     // Add model response
     setMessages(prev => [...prev, { role: 'model', text: response }]);
@@ -70,6 +72,28 @@ export const AICurator: React.FC<AICuratorProps> = ({ isOpen, onClose }) => {
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
+        </div>
+
+        <div className="px-4 py-2 border-b border-gray-200 dark:border-white/10 bg-white dark:bg-[#2a2a2a]">
+          <label htmlFor="ai-model-select" className="block text-xs font-semibold text-gray-600 dark:text-gray-300 mb-1">
+            AI Model
+          </label>
+          <select
+            id="ai-model-select"
+            value={selectedModel}
+            onChange={(e) => setSelectedModel(e.target.value)}
+            disabled={isLoading}
+            className="w-full text-sm rounded-lg px-3 py-2 border border-gray-300 dark:border-white/10 bg-white dark:bg-black/30 text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-stanford-primary"
+          >
+            {AI_MODEL_OPTIONS.map((model) => (
+              <option key={model.id} value={model.id}>
+                {model.label}
+              </option>
+            ))}
+          </select>
+          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            {AI_MODEL_OPTIONS.find((model) => model.id === selectedModel)?.description}
+          </p>
         </div>
 
         {/* Chat Area */}
