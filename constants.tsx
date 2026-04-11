@@ -1,4 +1,22 @@
-import { ExhibitCategory, ExhibitItem } from './types';
+import { AIModelOption, ExhibitCategory, ExhibitItem } from './types';
+
+export const AI_MODEL_OPTIONS: AIModelOption[] = [
+  {
+    id: 'gemini-3-flash-preview',
+    label: 'Gemini 3 Flash (Preview)',
+    description: 'Fast responses for everyday curator questions.'
+  },
+  {
+    id: 'gemini-2.5-flash',
+    label: 'Gemini 2.5 Flash',
+    description: 'Balanced speed and quality for general use.'
+  },
+  {
+    id: 'gemini-2.5-pro',
+    label: 'Gemini 2.5 Pro',
+    description: 'Deeper reasoning for complex legal analysis prompts.'
+  }
+];
 
 export const EXHIBIT_CATEGORIES: ExhibitCategory[] = [
   {

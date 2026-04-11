@@ -59,7 +59,8 @@ const getAI = () => {
 
 export const sendMessageToGemini = async (
   history: { role: 'user' | 'model'; text: string }[],
-  userMessage: string
+  userMessage: string,
+  model: string
 ): Promise<string> => {
   try {
     const ai = getAI();
@@ -72,9 +73,6 @@ export const sendMessageToGemini = async (
       return "⚠️ System Error: Failed to initialize AI client.";
     }
 
-    // Use the specific model requested for Basic Text Tasks
-    const model = 'gemini-3-flash-preview';
-    
     // The history array passed in includes the current user message at the end.
     // We must exclude it from the history passed to chats.create.
     const pastHistory = history.slice(0, -1);
@@ -143,7 +141,7 @@ export const sendMessageToGemini = async (
     
     // 4. Handle Model Not Found (404)
     if (error.status === 404) {
-      return `⚠️ Configuration Error: The model '${'gemini-3-flash-preview'}' was not found. Your API key might not have access to this preview model yet.`;
+      return `⚠️ Configuration Error: The model '${model}' was not found. Your API key might not have access to this model yet.`;
     }
     
     return `⚠️ Technical Difficulty: ${error.message || 'Unknown error occurred'}`;
